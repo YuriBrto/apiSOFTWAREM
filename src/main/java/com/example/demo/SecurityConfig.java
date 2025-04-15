@@ -1,52 +1,60 @@
 package com.example.demo;
 
+import com.example.demo.Security.JwtAuthFilter;
+import com.example.demo.Services.CustomUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-
-import static org.springframework.security.config.Customizer.withDefaults;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableWebSecurity
 public class SecurityConfig {
 
-    // Definindo as permissões de segurança
+    @Autowired
+    private JwtAuthFilter jwtAuthFilter;
+
+    @Autowired
+    private CustomUserDetailsService userDetailsService;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())  // Desabilita a proteção CSRF
-                .authorizeHttpRequests(authorizeRequests ->
-                        authorizeRequests
-                                .requestMatchers("/login").permitAll()  // Permite acesso sem autenticação
-                                .anyRequest().authenticated()  // Exige autenticação para as demais rotas
+                .csrf(csrf -> csrf.disable())  // Desativa CSRF
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/login").permitAll()  // Permite o acesso à rota /login
+                        .anyRequest().authenticated()  // Requer autenticação para outras rotas
                 )
-                .formLogin(withDefaults())  // Configuração do login padrão
-                .logout(logout -> logout.permitAll());  // Permite logout
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))  // Configuração sem estado
+                .authenticationProvider(authenticationProvider())  // Usa o provedor de autenticação
 
-        return http.build();  // Retorna a configuração completa do filtro de segurança
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);  // Adiciona o filtro JWT
+
+        return http.build();
     }
 
-    // Define o PasswordEncoder para o BCrypt
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
+    }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder();  // Usando bcrypt para codificação de senha
     }
 
-    // Definindo o UserDetailsService para fornecer usuários para a autenticação
     @Bean
-    public UserDetailsService userDetailsService() {
-        return username -> User
-                .withUsername("admin")  // Definindo um usuário "admin" para testes
-                .password(passwordEncoder().encode("password"))  // Senha do usuário
-                .roles("USER")  // Papel do usuário
-                .build();
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
     }
 }
