@@ -1,4 +1,4 @@
-package com.example.demo.Security;
+package com.example.demo.Services.Security;
 
 import com.example.demo.Services.JwtTokenService;
 import com.example.demo.Services.CustomUserDetailsService;
