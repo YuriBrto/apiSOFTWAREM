@@ -22,5 +22,5 @@ public class users {
     private Role role;
 
     private String name;
-    private String schoolName; // usado só se for professor
+    private String schoolName; // usado só se for Professor
 }

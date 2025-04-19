@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.Set;
 
 @Entity
 public class Software {
@@ -40,6 +39,6 @@ public class Software {
     @JoinColumn(name = "solicitado_por")
     @Getter
     @Setter
-    private professor solicitadoPor;// Quem solicitou o software
+    private Professor solicitadoPor;// Quem solicitou o software
 
 }

@@ -33,4 +33,28 @@ public class LabService {
         return labRepository.findByIdWithSoftwares(labId)
                 .orElseThrow(() -> new RuntimeException("Laboratório não encontrado"));
     }
+    public Lab saveLab(Lab lab) {
+        return labRepository.save(lab);
+    }
+
+    public List<Lab> getAllLabs() {
+        return labRepository.findAll();
+    }
+
+    public Lab getLabById(Long id) {
+        return labRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Laboratório não encontrado com id: " + id));
+    }
+
+    public Lab updateLab(Long id, Lab labDetails) {
+        Lab lab = getLabById(id);
+        lab.setNome(labDetails.getNome());
+        lab.setStatus(labDetails.isStatus());
+        return labRepository.save(lab);
+    }
+
+    public void deleteLab(Long id) {
+        Lab lab = getLabById(id);
+        labRepository.delete(lab);
+    }
 }

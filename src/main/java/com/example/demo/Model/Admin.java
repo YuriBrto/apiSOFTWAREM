@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-public class admin {
+public class Admin {
 @Getter
 @Setter
     @Id
