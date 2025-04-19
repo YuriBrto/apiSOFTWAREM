@@ -33,6 +33,6 @@ public class Software {
     @ManyToOne
     @JoinColumn(name = "solicitado_por")
     @Getter @Setter
-    private professor solicitadoPor; // Quem solicitou o software
+    private Professor solicitadoPor; // Quem solicitou o software
 
 }

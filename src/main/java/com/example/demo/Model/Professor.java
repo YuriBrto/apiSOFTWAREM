@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-public class professor {
+public class Professor {
 @Getter
 @Setter
     @Id
