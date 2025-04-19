@@ -15,24 +15,36 @@ public class Software {
     @Setter
     private Long id;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private String nome;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private String link;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private String versao;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private boolean softwareLivre;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private LocalDate dataSolicitacao;
 
     @ManyToOne
     @JoinColumn(name = "solicitado_por")
-    @Getter @Setter
-    private professor solicitadoPor; // Quem solicitou o software
+    @Getter
+    @Setter
+    private professor solicitadoPor;// Quem solicitou o software
+
+    @ManyToMany
+    @JoinColumn(name = "LabName.id")
+    @Getter
+    @Setter
+    private Lab LabName;
 
 }
