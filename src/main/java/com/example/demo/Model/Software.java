@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 public class Software {
@@ -40,11 +41,5 @@ public class Software {
     @Getter
     @Setter
     private professor solicitadoPor;// Quem solicitou o software
-
-    @ManyToMany
-    @JoinColumn(name = "LabName.id")
-    @Getter
-    @Setter
-    private Lab LabName;
 
 }
