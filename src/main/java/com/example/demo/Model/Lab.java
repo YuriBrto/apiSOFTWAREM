@@ -15,7 +15,7 @@ public class Lab {
 
     private String nome;
     private boolean status;
-    
+
     @ManyToMany
     @JoinTable(
             name = "lab_software",
