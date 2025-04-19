@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class users {
+public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
