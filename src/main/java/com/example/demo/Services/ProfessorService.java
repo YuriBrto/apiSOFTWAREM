@@ -19,6 +19,28 @@ public class ProfessorService {
 
     public Professor findById(Long id) {
         return professorRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Professor não encontrado"));
+                .orElseThrow(() -> null);
+    }
+
+    public Professor create(Professor professor) {
+        // Aqui você pode incluir validações antes de salvar
+        return professorRepository.save(professor);
+    }
+
+    public Professor update(Long id, Professor updatedProfessor) {
+        Professor existingProfessor = professorRepository.findById(id)
+                .orElseThrow(() -> null);
+
+        existingProfessor.setNome(updatedProfessor.getNome());
+        existingProfessor.setEscola(updatedProfessor.getEscola());
+        existingProfessor.setTipo(updatedProfessor.getTipo());
+
+        return professorRepository.save(existingProfessor);
+    }
+
+    public void delete(Long id) {
+        Professor existingProfessor = professorRepository.findById(id)
+                .orElseThrow(() -> null);
+        professorRepository.delete(existingProfessor);
     }
 }

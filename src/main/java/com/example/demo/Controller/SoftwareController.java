@@ -2,6 +2,7 @@ package com.example.demo.Controller;
 
 import com.example.demo.Model.Software;
 import com.example.demo.Services.SoftwareService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,4 +36,13 @@ public class SoftwareController {
     public void delete(@PathVariable Long id) {
         service.delete(id);
     }
+
+    @PutMapping("/{id}/marcar-nao-livre")
+    public ResponseEntity<Software> marcarComoNaoLivre(@PathVariable Long id) {
+        Software atualizado = service.marcarComoNaoLivre(id);
+        return ResponseEntity.ok(atualizado);
+    }
+
+
+
 }
