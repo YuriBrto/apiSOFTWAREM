@@ -21,7 +21,7 @@ public class LabService {
 
     public Lab addSoftwaresToLab(Long labId, List<Long> softwareIds) {
         Lab lab = labRepository.findById(labId)
-                .orElseThrow(() -> new RuntimeException("Laboratório não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Laboratorio nao encontrado"));
 
         Set<Software> softwaresToAdd = softwareRepository.findAllByIdIn(softwareIds);
         lab.getSoftwares().addAll(softwaresToAdd);
@@ -31,7 +31,7 @@ public class LabService {
 
     public Lab getLabWithSoftwares(Long labId) {
         return labRepository.findByIdWithSoftwares(labId)
-                .orElseThrow(() -> new RuntimeException("Laboratório não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Laboratorio nao encontrado"));
     }
     public Lab saveLab(Lab lab) {
         return labRepository.save(lab);
@@ -43,7 +43,7 @@ public class LabService {
 
     public Lab getLabById(Long id) {
         return labRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Laboratório não encontrado com id: " + id));
+                .orElseThrow(() -> new RuntimeException("Laboratorio nao encontrado com id: " + id));
     }
 
     public Lab updateLab(Long id, Lab labDetails) {
