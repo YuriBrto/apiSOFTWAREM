@@ -1,7 +1,9 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Exception.ResourceNotFoundException;
 import com.example.demo.Model.Software;
 import com.example.demo.Services.SoftwareService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +22,18 @@ public class SoftwareController {
     @PostMapping
     public Software create(@RequestBody Software software) {
         return service.save(software);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Software> updateSoftware(@PathVariable Long id, @RequestBody Software software) {
+        try {
+            Software updatedSoftware = service.update(software);
+            return ResponseEntity.ok(updatedSoftware);
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     @GetMapping
