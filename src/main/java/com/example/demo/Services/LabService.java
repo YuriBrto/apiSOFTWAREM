@@ -23,6 +23,12 @@ public class LabService {
         Lab lab = labRepository.findById(labId)
                 .orElseThrow(() -> new RuntimeException("Laboratorio nao encontrado"));
 
+        for (Long software : softwareIds) {
+            if (softwareIds.contains(software)) {
+                throw new RuntimeException("Software ja instalado no laboratorio: ");
+            }
+        }
+
         Set<Software> softwaresToAdd = softwareRepository.findAllByIdIn(softwareIds);
         lab.getSoftwares().addAll(softwaresToAdd);
 
