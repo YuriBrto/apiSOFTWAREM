@@ -3,9 +3,7 @@ package com.example.demo.Model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
 @Entity
-@Table(name = "professor")
 @Getter
 @Setter
 public class Professor {
@@ -14,23 +12,17 @@ public class Professor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "teacher_name")
     private String nome;
-
-    @Column(name = "school_name")
     private String escola;
 
     @ManyToOne
-    @JoinColumn(name = "type_id")
+    @JoinColumn(name = "type_id", nullable = false)  // Defina como não nulo
     private Type tipo;
 
-    // Construtor padrão necessário para JPA
-    public Professor() {}
+    @OneToOne(cascade = CascadeType.ALL)  // Relacionamento com a entidade 'User'
+    @JoinColumn(name = "user_id", nullable = false)  // Certifique-se de que este campo não será nulo
+    private Users user;
 
-    // Construtor com campos
-    public Professor(String nome, String escola, Type tipo) {
-        this.nome = nome;
-        this.escola = escola;
-        this.tipo = tipo;
-    }
+    @Transient
+    private String senha;  // Mantenha a senha apenas como campo não persistido, pois é tratada pela tabela 'Users'
 }

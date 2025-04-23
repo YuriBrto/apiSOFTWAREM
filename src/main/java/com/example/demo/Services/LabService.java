@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class LabService {
@@ -23,9 +24,14 @@ public class LabService {
         Lab lab = labRepository.findById(labId)
                 .orElseThrow(() -> new RuntimeException("Laboratorio nao encontrado"));
 
-        for (Long software : softwareIds) {
-            if (softwareIds.contains(software)) {
-                throw new RuntimeException("Software ja instalado no laboratorio: ");
+        Set<Software> softwaresExistentes = lab.getSoftwares(); // Softwares já instalados
+        Set<Long> idsExistentes = softwaresExistentes.stream()
+                .map(Software::getId)
+                .collect(Collectors.toSet());
+
+        for (Long id : softwareIds) {
+            if (idsExistentes.contains(id)) {
+                throw new RuntimeException("Software já instalado no laboratório: ID " + id);
             }
         }
 
@@ -39,6 +45,7 @@ public class LabService {
         return labRepository.findByIdWithSoftwares(labId)
                 .orElseThrow(() -> new RuntimeException("Laboratorio nao encontrado"));
     }
+
     public Lab saveLab(Lab lab) {
         return labRepository.save(lab);
     }
@@ -63,4 +70,7 @@ public class LabService {
         Lab lab = getLabById(id);
         labRepository.delete(lab);
     }
+
+
+
 }

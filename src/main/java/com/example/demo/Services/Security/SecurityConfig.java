@@ -35,7 +35,7 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/labs/{labId}/add-softwares", "/api/software", "/api/labs", "/login", "/v3/api-docs/**",
+                        .requestMatchers("/api/solicitacao/aprovarsolicitacao/{id}", "/api/solicitacao/{id}", "/api/professores", "/api/solicitacao", "/api/software/{id}", "/api/labs/{labId}/add-softwares", "/api/software", "/api/labs", "/login", "/v3/api-docs/**",
                                 "/swagger-ui.html",
                                 "/swagger-ui/**",
                                 "/swagger-resources/**",

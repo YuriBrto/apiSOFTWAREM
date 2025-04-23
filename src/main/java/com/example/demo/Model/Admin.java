@@ -9,8 +9,8 @@ import lombok.Setter;
 
 @Entity
 public class Admin {
-@Getter
-@Setter
+    @Getter
+    @Setter
     @Id
     private long id;
 

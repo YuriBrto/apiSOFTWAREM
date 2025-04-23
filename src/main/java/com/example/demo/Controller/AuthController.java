@@ -24,11 +24,10 @@ public class AuthController {
     private JwtTokenService jwtTokenService;
 
     @PostMapping("/login")
-    public LoginResponse login(@RequestBody LoginRequest loginRequest) {
-        System.out.println("Recebendo requisição de login: " + loginRequest.getUsername()); // Log de entrada
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+        System.out.println("Recebendo requisição de login: " + loginRequest.getUsername());
 
         try {
-            // Realizando autenticação
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             loginRequest.getUsername(),
@@ -36,17 +35,24 @@ public class AuthController {
                     )
             );
 
-            System.out.println("Autenticação realizada com sucesso!"); // Log de sucesso após a autenticação
+            System.out.println("Autenticação realizada com sucesso!");
 
-            // Gerar token JWT
+
             String token = jwtTokenService.generateToken(loginRequest.getUsername());
-            System.out.println("Token gerado: " + token); // Log do token gerado
+            System.out.println("Token gerado: " + token);
 
-            return new LoginResponse(token); // Retorna o token gerado
+
+            String role = authentication.getAuthorities().stream()
+                    .findFirst()
+                    .map(auth -> auth.getAuthority())
+                    .orElse("UNKNOWN");
+
+            return ResponseEntity.ok(new LoginResponse(token, role));
 
         } catch (Exception e) {
-            System.out.println("Erro de autenticação: " + e.getMessage()); // Log de erro em caso de falha na autenticação
-            return new LoginResponse("Erro de autenticação: " + e.getMessage()); // Retorna a mensagem de erro
+            System.out.println("Erro de autenticação: " + e.getMessage());
+            return ResponseEntity.status(401).body("Credenciais inválidas!"); // Retorna status 401
         }
     }
+
 }
