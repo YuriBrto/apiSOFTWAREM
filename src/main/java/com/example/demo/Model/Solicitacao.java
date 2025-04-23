@@ -29,4 +29,8 @@ private Lab lab;
 @Column(nullable = false)
 private Boolean aprovada;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private StatusInstalacao statusInstalacao = StatusInstalacao.INICIADA; // valor padrão
+
 }

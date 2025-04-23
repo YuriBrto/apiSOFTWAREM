@@ -2,10 +2,7 @@ package com.example.demo.Controller;
 
 import com.example.demo.DTO.SolicitacaoDTO;
 import com.example.demo.Exception.ResourceNotFoundException;
-import com.example.demo.Model.Lab;
-import com.example.demo.Model.Professor;
-import com.example.demo.Model.Software;
-import com.example.demo.Model.Solicitacao;
+import com.example.demo.Model.*;
 import com.example.demo.Repository.LabRepository;
 import com.example.demo.Repository.ProfessorRepository;
 import com.example.demo.Repository.SoftwareRepository;
@@ -97,5 +94,24 @@ public Solicitacao aprovarSolicitacao(@PathVariable Long id){
     }
     return service.findById(id);
 }
+    @PutMapping("/{id}/status")
+    public ResponseEntity<Solicitacao> atualizarStatus(
+            @PathVariable Long id,
+            @RequestParam StatusInstalacao status) {
+
+        Solicitacao solicitacao = service.findById(id);
+        solicitacao.setStatusInstalacao(status);
+
+        // Exemplo de liberação do laboratório caso status seja FINALIZADA
+        if (status == StatusInstalacao.FINALIZADA) {
+            Lab lab = solicitacao.getLab();
+            lab.setStatus(true); // status true = liberado (ou você pode criar outro campo mais descritivo)
+            labService.saveLab(lab);
+
+            // Aqui poderia entrar a lógica de notificar o professor
+        }
+
+        return ResponseEntity.ok(service.save(solicitacao));
+    }
 
 }
