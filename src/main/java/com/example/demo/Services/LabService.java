@@ -39,6 +39,7 @@ public class LabService {
         return labRepository.findByIdWithSoftwares(labId)
                 .orElseThrow(() -> new RuntimeException("Laboratorio nao encontrado"));
     }
+
     public Lab saveLab(Lab lab) {
         return labRepository.save(lab);
     }
@@ -63,4 +64,7 @@ public class LabService {
         Lab lab = getLabById(id);
         labRepository.delete(lab);
     }
+
+
+
 }
