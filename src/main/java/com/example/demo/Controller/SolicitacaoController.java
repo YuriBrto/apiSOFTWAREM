@@ -20,7 +20,7 @@ import java.util.Collections;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/solicitacao")
+    @RequestMapping("/api/solicitacao")
 public class SolicitacaoController {
 
     @Autowired

@@ -20,7 +20,7 @@ private Long id;
 @ManyToMany
 private List<Software> SoftwaresSolicitados;
 
-@OneToOne
+@ManyToOne
 private Professor professor;
 
 @OneToOne
