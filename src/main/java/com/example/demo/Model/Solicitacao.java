@@ -23,7 +23,7 @@ private List<Software> SoftwaresSolicitados;
 @ManyToOne
 private Professor professor;
 
-@OneToOne
+@ManyToOne
 private Lab lab;
 
 @Column(nullable = false)
