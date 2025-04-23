@@ -8,7 +8,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-public class admin {
+<<<<<<<< HEAD:src/main/java/com/example/demo/Model/Professor.java
+public class Professor {
+========
+public class Admin {
+>>>>>>>> 3a622db251401730f3ff7fc4078f4e5522b616ab:src/main/java/com/example/demo/Model/Admin.java
 @Getter
 @Setter
     @Id

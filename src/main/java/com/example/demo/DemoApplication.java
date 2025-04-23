@@ -12,12 +12,5 @@ public class DemoApplication implements WebMvcConfigurer {
         SpringApplication.run(DemoApplication.class, args);
     }
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")  // Permite todas as URLs
-                .allowedOrigins("http://localhost:4200")  // URL do seu front-end Angular
-                .allowedMethods("GET", "POST", "PUT", "DELETE")
-                .allowedHeaders("*")
-                .allowCredentials(true);
-    }
+
 }

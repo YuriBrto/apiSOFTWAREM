@@ -1,6 +1,7 @@
 package com.example.demo.Model;
 
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Getter;
@@ -15,6 +16,9 @@ public class Type {
 
     @Getter
     @Setter
-    private String typeName; //definir o role
+    @Column(name = "type_name")
+    private String nome;
+
+
 
 }

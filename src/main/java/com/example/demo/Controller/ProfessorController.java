@@ -9,15 +9,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/professores")
+@RequestMapping("/api/professores")
 public class ProfessorController {
 
-    private final ProfessorService professorService;
-
     @Autowired
-    public ProfessorController(ProfessorService professorService) {
-        this.professorService = professorService;
-    }
+    private ProfessorService professorService;
 
     @GetMapping
     public ResponseEntity<List<Professor>> getAllProfessores() {
