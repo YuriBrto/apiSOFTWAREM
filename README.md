@@ -142,10 +142,14 @@ Este projeto está licenciado sob a Licença MIT.
 
 Desenvolvido por estudantes da Universidade Católica do Salvador - UCSal.
 
-Yuri Brito
-Lucas Gaspari
-Matheus Pires
-Gustavo Cruz
-Luan
+# Yuri Brito
+
+# Lucas Gaspari
+
+# Matheus Pires
+
+# Gustavo Cruz
+
+# Luan
 
 Repositório oficial: Git UCSAL (conforme orientação do professor responsável).
